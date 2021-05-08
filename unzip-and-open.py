@@ -7,18 +7,18 @@ import sys
 if __name__ == '__main__':
 
     def run(c):
-        print 'running: %s' % c
+        print('running: %s' % c)
         return subprocess.check_call(c, shell=True)
 
 
     assert len(sys.argv) > 1 and sys.argv[1].endswith('.zip'), 'you must specify a .zip file to open.'
-    zip = os.path.abspath(sys.argv[1])
-    assert os.path.exists(zip), 'the zip file referenced must be valid.'
-    folder_name = zip.split('.')[0]
+    zipFile = os.path.abspath(sys.argv[1])
+    assert os.path.exists(zipFile), 'the zip file referenced must be valid.'
+    folder_name = zipFile.split('.zip')[0]
     try:
-        run('unzip -a %s' % zip)
+        run('unzip -a %s' % zipFile)
     except:
-        print "non zero exist code but we proceed anyway.."
+        print("non zero exist code but we proceed anyway..")
 
     gradle_build = os.path.join(folder_name, 'build.gradle')
     mvn_pom = os.path.join(folder_name, 'pom.xml')
@@ -29,4 +29,4 @@ if __name__ == '__main__':
     if gradle_exists:
         run('idea  %s/build.gradle' % folder_name)
     else:
-        run('xdg-open %s/pom.xml' % folder_name)
+        run('idea %s/pom.xml' % folder_name)
